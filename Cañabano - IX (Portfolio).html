@@ -1,0 +1,766 @@
+<html lang="en">
+<head>
+<style>
+:root{
+   --yellow:#ffcc0d;
+   --black:#000;
+   --white:#fff;
+   --light-bg:#eee;
+   --border-bold:.5rem solid var(--black);
+   --border-light:.2rem solid var(--black);
+}
+
+*{
+   font-family: 'Rubik', sans-serif;
+   margin:0; padding:0;
+   box-sizing: border-box;
+   outline: none; border:none;
+   text-decoration: none;
+   text-transform: capitalize;
+   color:var(--black);
+}
+
+*::selection{
+   background-color: var(--black);
+   color:var(--yellow);
+}
+
+*::-webkit-scrollbar{
+   height: .5rem;
+   width: 1rem;
+}
+
+*::-webkit-scrollbar-track{
+   background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb{
+   background-color: var(--yellow);
+}
+
+html{
+   font-size: 62.5%;
+   overflow-x: hidden;
+   scroll-behavior: smooth;
+}
+
+body{
+   overflow: hidden;
+   transition: .2s linear !important;
+}
+
+body.active{
+   padding-left: 35rem;
+}
+
+section{
+   padding:3rem 2rem;
+   margin: 0 auto;
+   max-width: 1200px;
+   text-align: center;
+}
+
+.heading{
+   margin-bottom: 3rem;
+   text-align: center;
+}
+
+.heading span{
+   text-transform: uppercase;
+   font-size: 6.5rem;
+   border-bottom: var(--border-bold);
+}
+
+.message{
+   position: sticky;
+   top:2rem;
+   max-width: 1200px;
+   margin:0 auto;
+   background-color: var(--yellow);
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding:2rem;
+   font-size: 2rem;
+}
+
+.message i{
+   cursor: pointer;
+}
+
+.btn{
+   display: inline-block;
+   margin-top: 1rem;
+   cursor: pointer;
+   padding:1rem 3rem;
+   border:var(--border-light);
+   font-size: 2rem;
+   background: none;
+}
+
+.btn:hover{
+   background-color: var(--black);
+   color:var(--white);
+}
+
+.header{
+   position: fixed;
+   top:0; left:-35rem;
+   height: 100vh;
+   background-color: var(--white);
+   border-right: var(--border-bold);
+   width: 35rem;
+   padding:3rem 2rem;
+   text-align: center; 
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   flex-flow: column;
+   transition: .2s linear !important;
+   text-align: center;
+   z-index: 1000;
+}
+
+.header .logo{
+   text-transform: uppercase;
+   border-bottom: var(--border-bold);
+   font-weight: bolder;
+   font-size: 4.5rem;
+}
+
+.header .navbar{
+   width: 100%;
+}
+
+.header .navbar a{
+   display: block;
+   font-size: 2.5rem;
+   padding:1.5rem;
+   margin:.5rem;
+}
+
+.header .navbar a.active,
+.header .navbar a:hover{
+   background-color: var(--yellow);
+}
+
+.header .follow a{
+   font-size: 3rem;
+   margin:0 1rem;
+   cursor: pointer;
+   transition: .6s linear !important;
+}
+
+.header .follow a:hover{
+   transform: rotate(360deg);
+}
+
+#menu-btn{
+   position: absolute;
+   top:0; right:-5.5rem;
+   height: 4.5rem;
+   line-height: 4.5rem;
+   width: 5rem;
+   font-size: 2.5rem;
+   cursor: pointer;
+   background-color: var(--black);
+   color:var(--white);
+}
+
+.header.active{
+   left: 0;
+}
+
+.home{
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   gap:2rem;
+   min-height: 100vh;
+}
+
+.home .image{
+   flex:1 1 40rem;
+}
+
+.home .image img{
+   height: 65rem;
+   padding:2rem;
+   border:var(--border-bold);
+}
+
+.home .content{
+   flex:1 1 40rem;
+}
+
+.home .content h3{
+   text-transform: uppercase;
+   font-size: 5rem;
+   margin-bottom: .5rem;
+}
+
+.home .content span{
+   display: inline-block;
+   padding:1rem 2rem;
+   background-color: var(--yellow);
+   font-size: 2.5rem;
+   margin:1rem 0;
+}
+
+.home .content p{
+   font-size: 1.7rem;
+   line-height: 2;
+   padding:1rem 0;
+}
+
+.about .biography p{
+   margin:2rem auto;
+   max-width: 70rem;
+   line-height: 2;
+   font-size: 1.8rem;
+}
+
+.about .biography .bio{
+   margin: 1rem 0;
+}
+
+.about .biography .bio h3{
+   padding:1rem 2rem;
+   display: inline-block;
+   margin:1rem;
+   background-color: var(--light-bg);
+   border:var(--border-light);
+   word-break: break-all;
+   font-size: 2.5rem;
+   font-weight: normal;
+   text-transform: none;
+}
+
+.about .biography .bio h3 span{
+   font-weight: lighter;
+}
+
+.about .skills{
+   margin:3rem 0;
+}
+
+.about .skills .progress{
+   margin-top: 1rem;
+}
+
+.about .skills .progress .bar{
+   margin:1rem auto;
+   max-width: 70rem;
+   border:var(--border-bold);
+   padding:1rem;
+}
+
+.about .skills .progress .bar h3{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   font-size: 2rem;
+   padding:1rem 2rem;
+   background-color: var(--yellow);
+}
+
+.about .skills .progress .bar span{
+   font-weight: normal;
+}
+
+.about .skills .progress .bar:nth-child(1) h3{
+   width: 95%;
+}
+
+.about .skills .progress .bar:nth-child(2) h3{
+   width: 80%;
+}
+
+.about .skills .progress .bar:nth-child(3) h3{
+   width: 65%;
+}
+
+.about .skills .progress .bar:nth-child(4) h3{
+   width: 80%;
+}
+
+.about .edu-exp .row{
+   display: flex;
+   flex-wrap: wrap;
+   gap:1.5rem;
+}
+
+.about .edu-exp .row .box-container{
+   flex:1 1 40rem;
+}
+
+.about .edu-exp .row .box-container .title{
+   padding:1.5rem;
+   font-size: 3rem;
+   background-color: var(--yellow);
+}
+
+.about .edu-exp .row .box-container .box{
+   text-align: left;
+   margin:1.5rem 0;
+   background-color: var(--light-bg);
+   padding:2rem;
+}
+
+.about .edu-exp .row .box-container .box span{
+   font-size: 1.5rem;
+}
+
+.about .edu-exp .row .box-container .box h3{
+   font-size: 2.5rem;
+   font-weight: normal;
+   margin-top: 1.5rem;
+   margin-bottom: 1rem;
+}
+
+.about .edu-exp .row .box-container .box p{
+   line-height: 1.5;
+   font-size: 1.7rem;
+   line-height: 2;
+}
+
+.services .box-container{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+   gap:1.5rem;
+   align-items: flex-start;
+}
+
+.services .box-container .box{
+   padding:3rem 2rem;
+   border:var(--border-light);
+
+}
+
+.services .box-container .box i{
+   font-size: 4rem;
+   margin-bottom: 2rem;
+}
+
+.services .box-container .box h3{
+   margin:1rem 0;
+   font-size: 2rem;
+   padding:1.5rem;
+   background-color: var(--yellow);
+   font-weight: normal;
+}
+
+.services .box-container .box p{
+   line-height: 2;
+   font-size: 1.7rem;
+}
+
+.services .box-container .box:hover{
+   background-color: var(--black);
+}
+
+.services .box-container .box:hover i{
+   color:var(--white);
+}
+
+.services .box-container .box:hover p{
+   color:var(--white);
+}
+
+.portfolio .box-container{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+   gap:1.5rem;
+   align-items: flex-start;
+}
+
+.portfolio .box-container .box img{
+   height: 20rem;
+   width: 100%;
+   object-fit: cover;
+}
+
+.portfolio .box-container .box h3{
+   margin:1rem 0;
+   font-size: 2rem;
+   font-weight: normal;
+}
+
+.portfolio .box-container .box span{
+   font-size: 1.7rem;
+}
+
+.contact form{
+   max-width: 70rem;
+   margin:0 auto;
+}
+
+.contact form .box{
+   width: 100%;
+   padding:1.4rem;
+   font-size: 2rem;
+   text-transform: none;
+   border:var(--border-light);
+   margin:1rem 0;
+}
+
+.contact form textarea{
+   height: 20rem;
+   resize: none;
+}
+
+.contact form .flex{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+}
+
+.contact form .flex .box{
+   width: 49%;
+}
+
+.contact .box-container{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+   gap:1.5rem;
+   align-items: flex-start;
+   margin-top: 3rem;
+}
+
+.contact .box-container .box{
+   padding:3rem 2rem;
+   border:var(--border-light);
+}
+
+.contact .box-container .box i{
+   font-size: 3rem;
+   height: 7rem;
+   width: 7rem;
+   line-height: 7rem;
+   color:var(--white);
+   background-color: var(--black);
+   margin-bottom: .5rem;
+}
+
+.contact .box-container .box h3{
+   margin:1.5rem 0;
+   font-size: 2.5rem;
+}
+
+.contact .box-container .box p{
+   font-size: 2rem;
+   text-transform: none;
+}
+
+.credit{
+   text-align: center;
+   background-color: var(--black);
+   padding:3rem;
+   font-size: 2rem;
+   color:var(--white);
+}
+
+.credit span{
+   color:var(--yellow);
+}
+
+
+
+
+
+
+/* media queries  */
+
+@media (max-width:991px){
+
+   html{
+      font-size: 55%;
+   }
+
+   body.active{
+      padding-left: 0;
+   }
+
+}
+
+@media (max-width:450px){
+
+   html{
+      font-size: 50%;
+   }
+
+   .header.active{
+      padding-top: 7rem;
+   }
+
+   #menu-btn.fa-times{
+      right:0;
+   }
+
+   .home .image img{
+      height: auto;
+      width: 100%;
+   }
+
+   .heading span{
+      font-size: 4rem;
+   }
+
+   .about .biography .bio h3{
+      font-size: 2rem;
+   }
+
+   .contact form .flex .box{
+      width: 100%;
+   }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- header section starts  -->
+
+<header class="header">
+
+   <div id="menu-btn" class="fas fa-bars"></div>
+
+   <a href="#home" class="logo"> Portfolio</a>
+
+   <nav class="navbar">
+      <a href="#home" class="active">home</a>
+      <a href="#about">about</a>
+      <a href="#portfolio">portfolio</a>
+      <a href="#contact">contact</a>
+   </nav>
+
+   <div class="follow">
+      <a href="#" class="fab fa-facebook-f"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+      <a href="#" class="fab fa-linkedin"></a>
+   </div>
+			
+</header>
+
+<!-- header section ends -->
+
+<!-- home section starts  -->  
+
+<section class="home" id="home">
+
+   <div class="image" data-aos="fade-left">
+      <img src="Cañabano.jpg" alt="Cañabano.jpg">
+   </div>
+
+   <div class="content">
+      <h3 data-aos="fade-up">Greetings, I am Greg Nathaniel M. Cañabano</h3>
+      <span data-aos="fade-up">A RTPM-DSHS Student</span>
+      <p data-aos="fade-up">Ramon Teves Pastor Memorial - Dumaguete Science High School is a public science high school located in Dumaguete City, Philippines. It serves as the Regional Science High School for the Central Visayas.</p>
+      <a data-aos="fade-up" href="#about" class="btn">about me</a>
+   </div>
+
+</section>
+
+<!-- home section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+   <h1 class="heading" data-aos="fade-up"> <span>biography</span> </h1>
+
+   <div class="biography">
+
+      <p data-aos="fade-up">“"Determination and perseverance are the alchemy that transform dreams into success, for it is through steadfast effort and unwavering resolve that we brew the sweetest victories."</p>
+
+      <div class="bio">
+         <h3 data-aos="zoom-in"> <span>name : </span> Greg Nathaniel M. Cañabano </h3>
+         <h3 data-aos="zoom-in"> <span>email : </span> gregnathaniel12@gmail.com </h3>
+         <h3 data-aos="zoom-in"> <span>address : </span> Dumaguete City </h3>
+         <h3 data-aos="zoom-in"> <span>phone : </span> 091892*****
+         <h3 data-aos="zoom-in"> <span>age : </span> 15 years old </3>
+      </div>
+
+
+   </div>
+   
+   <div class="skills" data-aos="fade-up">
+
+      <h1 class="heading"> <span>skills</span> </h1>
+
+      <div class="progress">
+         <div class="bar" data-aos="fade-left"> <h3><span>Basketball</span> <span>95%</span></h3> </div>
+         <div class="bar" data-aos="fade-right"> <h3><span>Studying</span> <span>80%</span></h3> </div>
+         <div class="bar" data-aos="fade-left"> <h3><span>CSS</span> <span>65%</span></h3> </div>
+         <div class="bar" data-aos="fade-right"> <h3><span>HTML</span> <span>80%</span></h3> </div>
+      </div>
+
+   </div>
+
+   <div class="edu-exp">
+
+      <h1 class="heading" data-aos="fade-up"> <span>education</span> </h1>
+
+      <div class="row">
+
+         <div class="box-container">
+
+            <h3 class="title" data-aos="fade-right">Elementary</h3>
+
+            <div class="box" data-aos="fade-right">
+               <span>( 2014 - 2016 )</span>
+               <h3>Santa Catalina Central Elementary School</h3>
+               <span>( 2017 - 2018 )</span>
+               <h3>Maslog Elementary School</h3>
+               <span>( 2019 - 2020 )</span>
+               <h3>Ramon Magsaysay Memorial Elementary School</h3>
+               <p>I started studying in SCCES when I was 6 years old, from Grade 1 until Grade 3, in MES from Grade 4, and finally in RMMES from Grade 5 - 6. During my elementary years, I frequently change from school to school.</p>
+            </div>
+
+         </div>
+
+         <div class="box-container">
+
+            <h3 class="title" data-aos="fade-left">Secondary</h3>
+
+            <div class="box" data-aos="fade-left">
+               <span>( 2020 - Ongoing student)</span>
+               <h3>RTPM-DSHS</h3>
+               <p>I began studying at RTPM-DSHS when I was 12 years old, starting in Grade 7 and And Currently In Grade 9. It is one of Dumaguete's prestigious school.</p> 
+
+
+         </div>
+
+      </div>
+
+   </div>
+
+</section>
+
+<!-- about section ends -->
+
+
+<!-- portfolio section starts  -->
+
+<section class="portfolio" id="portfolio">
+
+   <h1 class="heading" data-aos="fade-up"> <span>portfolio</span> </h1>
+
+   <div class="box-container">
+
+      <div class="box" data-aos="zoom-in">
+         <img src="Flag.png" alt="">
+         <h3>Making flags using HTML Tables and CSS</h3>
+         <a href="flag.html"; target="_blank">Web (Click me)</a>
+      </div>
+
+      <div class="box" data-aos="zoom-in">
+         <img src="Frame.png" alt="">
+         <h3>HTML Frames and CSS</h3>
+         <a href="frame.html"; target="_blank">Web (Click me)</a>
+      </div>
+
+      <div class="box" data-aos="zoom-in">
+         <img src="Iframes.png" alt="">
+         <h3>HTML IFrames</h3>
+         <a href="IFrame.html"; target="_blank">Web (Click me)</a>
+      </div>
+
+      <div class="box" data-aos="zoom-in">
+         <img src="Internal CSS.png" alt="">
+         <h3>Internal CSS</h3>
+         <a href="Internall CSS.html"; target="_blank">Web (Click me)</a>
+
+      <div class="box" data-aos="zoom-in">
+         <img src="Mapping.png" alt="">
+         <h3>Mapping</h3>
+         <a href="Mapping.html"; target="_blank">Web (Clik me)</a>
+      </div>
+
+      <div class="box" data-aos="zoom-in">
+         <img src="Personal Portfolio (Index).png" alt="">
+         <h3>Personal Portfolio</h3>
+         <a href="index.html"; target="_blank">Web (Clik me)</a>
+      </div>
+
+   </div>
+
+</section>
+
+<!-- portfolio section ends -->
+
+<!-- contact section starts  -->
+
+<section class="contact" id="contact">
+
+   <h1 class="heading" data-aos="fade-up"> <span>contact me</span> </h1>
+   <h2 class="heading" data-aos="fade-up"><p>for services</p></h2>
+
+   <form action="" method="post">
+      <div class="flex">
+         <input data-aos="fade-right" type="text" name="name" placeholder="enter your name" class="box" required>
+         <input data-aos="fade-left" type="email" name="email" placeholder="enter your email" class="box" required>
+      </div>
+      <input data-aos="fade-up" type="number" min="0" name="number" placeholder="enter your number" class="box" required>
+      <textarea data-aos="fade-up" name="message" class="box" required placeholder="enter your message" cols="30" rows="10"></textarea>
+      <input type="submit" data-aos="zoom-in" value="send message" name="send" class="btn">
+   </form>
+
+   <div class="box-container">
+
+      <div class="box" data-aos="zoom-in">
+         <i class="fas fa-phone"></i>
+         <h3>Phone</h3>
+         <p>091892*****</p>
+      </div>
+
+      <div class="box" data-aos="zoom-in">
+         <i class="fas fa-envelope"></i>
+         <h3>Email</h3>
+         <p>gregnathaniel12@gmail.com</p>
+      </div>
+
+      <div class="box" data-aos="zoom-in">
+         <i class="fas fa-map-marker-alt"></i>
+         <h3>Address</h3>
+         <p>Dumaguete City</p>
+      </div>
+
+   </div>
+
+</section>
+
+<!-- contact section ends -->
+
+
+
+
+
+<div class="credit"> &copy; Submitted to: <span>Bracil G. Cimafranca</span> </div>
+
+
+
+
+
+
+
+
+<!-- custom js file link  -->
+<script src=".js"></script>
+
+<!-- aos js link  -->
+<script src="C:\Users\GMC\Downloads\ICT PERFORMANCE TASK\.js"></script>
+
+<script>
+
+   AOS.init({
+      duration:800,
+      delay:300
+   });
+
+</script>
+   
+</body>
+</html>
